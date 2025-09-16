@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const BASE_URL = 'https://fakestoreapi.com'
+const BASE_URL = "https://fakestoreapi.com";
 
 // const options = {
 //     params: {
-//         category_id: '2478868012',  
+//         category_id: '2478868012',
 //     },
 //     headers: {
 //         'x-rapidapi-key': import.meta.env.VITE_REACT_APP_RAPID_API_KEY,
@@ -13,6 +13,6 @@ const BASE_URL = 'https://fakestoreapi.com'
 // };
 
 export const fetchFromApi = async (url) => {
-    const response = await axios.get(`${BASE_URL}/${url}`)
-    return response.data
-}
+  const response = await axios.get(`${BASE_URL}/${url}`);
+  return response.data;
+};

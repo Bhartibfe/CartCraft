@@ -9,7 +9,7 @@ const Checkout = () => {
   const amount = Math.round(total * 100);
   const currency = "INR";
   const receiptId = Date.now().toString();
-  const apiUrl = "https://yash-cartcraft-server.vercel.app";
+  const apiUrl = "http://localhost:5000";
 
   const navigate = useNavigate();
 
@@ -55,6 +55,7 @@ const Checkout = () => {
             },
           });
           navigate("/payment-success", { state: { paymentId } });
+          console.log("Confirmation email sent successfully to", orderData.email);
         } catch (error) {
           console.error("Error sending confirmation email:", error);
           alert("Payment successful, but failed to send confirmation email.");

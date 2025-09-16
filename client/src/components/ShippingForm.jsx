@@ -47,22 +47,22 @@ const ShippingForm = () => {
   };
 
   const countryOptions = Country.getAllCountries().map((country) => ({
-    label: country.name,
-    value: country.isoCode,
+    label: country?.name,
+    value: country?.isoCode,
   }));
 
   const stateOptions = selectedCountry
     ? State.getStatesOfCountry(selectedCountry.value).map((state) => ({
-        label: state.name,
-        value: state.isoCode,
+        label: state?.name,
+        value: state?.isoCode,
       }))
     : [];
 
   const cityOptions = selectedState
     ? City.getCitiesOfState(selectedCountry.value, selectedState.value).map(
         (city) => ({
-          label: city.name,
-          value: city.name,
+          label: city?.name,
+          value: city?.name,
         })
       )
     : [];

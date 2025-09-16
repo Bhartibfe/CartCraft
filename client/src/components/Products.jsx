@@ -3,7 +3,6 @@ import { RiFlashlightFill } from "../utils/constants";
 
 import { ProductCard } from "./index";
 
-// eslint-disable-next-line react/prop-types
 const Products = ({ title, products }) => {
   return (
     <section className=" flex flex-col">
@@ -20,9 +19,9 @@ const Products = ({ title, products }) => {
                 </div> */}
       </div>
       <div className="flex flex-row items-center justify-center gap-4 flex-wrap md:gap-8">
-        {products.map((item) => (
+        {products?.map((item) => (
           <div
-            key={item.id}
+            key={item?.id}
             className="bg-white flex flex-col items-start h-[28vh] w-[40%] rounded-lg md:w-[20%] md:h-[70vh]"
           >
             <ProductCard product={item} />

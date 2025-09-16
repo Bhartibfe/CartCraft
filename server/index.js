@@ -53,8 +53,8 @@ const sendConfirmationEmail = async (email, name, paymentId, amount) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "sharmasandhya95185@gmail.com",
-      pass: "heou kvgn zmgl lskr",
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
     },
   });
 

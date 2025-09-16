@@ -4,6 +4,16 @@ import * as Yup from "yup";
 import bglogin from "../assets/bg-img.png";
 
 const Signup = () => {
+  // const handleSignUp = (values) => {
+  //   console.log("first");
+  //   const storedSignupData = JSON.parse(localStorage.getItem("signupData"));
+  //   if (storedSignupData?.email === values?.email) {
+  //     console.log("This Email is already being used");
+  //   } else {
+  //     localStorage.setItem("signupData", JSON.stringify(values));
+  //     navigate("/login");
+  //   }
+  // };
   const navigate = useNavigate();
 
   const validationSchema = Yup.object().shape({
@@ -56,8 +66,17 @@ const Signup = () => {
           }}
           validationSchema={validationSchema}
           onSubmit={(values) => {
-            localStorage.setItem("signupData", JSON.stringify(values));
-            navigate("/login");
+            console.log("first");
+
+            const storedSignupData = JSON.parse(
+              localStorage.getItem("signupData")
+            );
+            if (storedSignupData?.email === values?.email) {
+              console.log("This Email is already being used");
+            } else {
+              localStorage.setItem("signupData", JSON.stringify(values));
+              navigate("/login");
+            }
           }}
         >
           {({
@@ -171,6 +190,7 @@ const Signup = () => {
                 type="submit"
                 className="bg-[#196a78] text-white w-full py-3 my-3 rounded md:my-6 hover:bg-[#17606d] hover:-translate-y-1 duration-200"
                 disabled={isSubmitting}
+                // onClick={handleSignUp}
               >
                 Sign Up
               </button>

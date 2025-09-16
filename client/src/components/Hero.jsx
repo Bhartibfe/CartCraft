@@ -33,7 +33,7 @@ const Hero = () => {
               />
             </span>
             <h1 className="text-xs md:text-base text-center h-fit font-bold">
-              {category.name}
+              {category?.name}
             </h1>
           </div>
         ))}

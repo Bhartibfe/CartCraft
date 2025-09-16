@@ -31,16 +31,16 @@ const Footer = () => {
           <button className="mr-2" onClick={signOut}>
             Logout
           </button>
-          <Link to="https://github.com/SandhyaSharmaaa" target="blank">
+          <Link to="https://github.com/Bhartibfe" target="blank">
             <FaGithub className="text-lg" />
           </Link>
           <Link
-            to="https://www.linkedin.com/in/sandhya-sharmaaa/"
+            to="https://www.linkedin.com/in/bharti-sharma-b20b29272"
             target="blank"
           >
             <FaLinkedinIn className="text-lg" />
           </Link>
-          <Link to="mailto:sharmasandhya95185@gmail.com" target="blank">
+          <Link to="mailto:bhartisharma95185@gmail.com" target="blank">
             <HiMail className="text-lg" />
           </Link>
         </div>
@@ -49,7 +49,7 @@ const Footer = () => {
         <p className="w-[30%] md:w-[20%]">Copyright ©️ 2025 CartCraft</p>
         {/* <hr size="2" width="60%" color='red'></hr> */}
         <div className="w-[42%] md:w-[65%] border-b-[1px] border-zinc-700"></div>
-        <p className="w-[20%] md:w-[15%] text-end">Designed by Sandhya</p>
+        <p className="w-[20%] md:w-[15%] text-end">Designed by Bharti</p>
       </div>
     </div>
   );
