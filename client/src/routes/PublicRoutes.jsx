@@ -4,7 +4,11 @@ import Login from "../pages/Login";
 import { useAuth } from "../context/Auth";
 
 const PublicRoutes = () => {
-    const { isLoggedIn } = useAuth();
+    const { isLoggedIn, authLoading } = useAuth();
+
+    if (authLoading) {
+        return null;
+    }
 
     return (
         <Routes>

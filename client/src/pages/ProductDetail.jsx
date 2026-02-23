@@ -13,6 +13,9 @@ import { toast, ToastContainer } from "react-toastify";
 const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState({});
+  const gallery = product?.images?.length
+    ? product.images.slice(0, 4)
+    : [product?.image, product?.image, product?.image, product?.image];
   useEffect(() => {
     fetchFromApi(`products/${id}`).then((data) => setProduct(data));
   }, [id]);
@@ -67,18 +70,14 @@ const ProductDetail = () => {
           />
         </div>
         <div className="flex gap-3 md:gap-5 h-[22%] md:h-[18%] w-full md:px-8">
-          <span className="h-full w-1/4 rounded-lg p-2 md:p-4 bg-white hover:scale-105 transition duration-300">
-            <img src={product.image} className="h-full w-full" />
-          </span>
-          <span className="h-full w-1/4 rounded-lg p-2 md:p-4 bg-white hover:scale-105 transition duration-300">
-            <img src={product.image} className="h-full w-full" />
-          </span>
-          <span className="h-full w-1/4 rounded-lg p-2 md:p-4 bg-white hover:scale-105 transition duration-300">
-            <img src={product.image} className="h-full w-full" />
-          </span>
-          <span className="h-full w-1/4 rounded-lg p-2 md:p-4 bg-white hover:scale-105 transition duration-300">
-            <img src={product.image} className="h-full w-full" />
-          </span>
+          {gallery.map((image, index) => (
+            <span
+              key={`${image}-${index}`}
+              className="h-full w-1/4 rounded-lg p-2 md:p-4 bg-white hover:scale-105 transition duration-300"
+            >
+              <img src={image} className="h-full w-full" />
+            </span>
+          ))}
         </div>
       </div>
       <div className="w-full md:w-1/2 md:px-12 flex flex-col justify-center">

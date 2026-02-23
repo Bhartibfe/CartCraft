@@ -10,7 +10,11 @@ import { useAuth } from "../context/Auth"
 import PaymentSuccess from "../pages/PaymentSuccess";
 
 const ProtectedRoutes = () => {
-    const { isLoggedIn } = useAuth();
+    const { isLoggedIn, authLoading } = useAuth();
+
+    if (authLoading) {
+        return null;
+    }
 
     return isLoggedIn ? (
         <Routes>

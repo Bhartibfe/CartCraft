@@ -3,6 +3,8 @@ import { useAuth } from "../context/Auth";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import bglogin from "../assets/bg-img.png";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../utils/firebase";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -16,17 +18,16 @@ const Login = () => {
     password: Yup.string().required("Password is required"),
   });
 
-  const handleSignIn = (values, { setSubmitting, setFieldError }) => {
-    const storedSignupData = JSON.parse(localStorage.getItem("signupData"));
-
-    if (
-      storedSignupData?.email === values?.email &&
-      storedSignupData?.password === values?.password
-    ) {
-      localStorage.setItem("loginData", JSON.stringify(values));
-      signIn();
+  const handleSignIn = async (values, { setSubmitting, setFieldError }) => {
+    try {
+      const credentials = await signInWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+      signIn(credentials.user);
       navigate("/");
-    } else {
+    } catch (error) {
       setFieldError("general", "Invalid Credentials!");
     }
 

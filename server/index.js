@@ -15,6 +15,13 @@ app.use(cors());
 
 app.post("/order", async (req, res) => {
   try {
+    if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_SECRET) {
+      return res.status(500).json({
+        error:
+          "Missing Razorpay credentials. Set RAZORPAY_KEY_ID and RAZORPAY_SECRET in server/.env",
+      });
+    }
+
     const razorpay = new Razorpay({
       key_id: process.env.RAZORPAY_KEY_ID,
       key_secret: process.env.RAZORPAY_SECRET,
@@ -24,14 +31,18 @@ app.post("/order", async (req, res) => {
     const order = await razorpay.orders.create(options);
 
     if (!order) {
-      return res.status(500).send("Bad Request");
+      return res.status(500).json({ error: "Failed to create order" });
     }
 
     res.json(order);
-    // console.log(options)
   } catch (err) {
     console.log(err);
-    res.status(500).send("Bad Request");
+    res.status(500).json({
+      error:
+        err?.error?.description ||
+        err?.message ||
+        "Bad Request",
+    });
   }
 });
 

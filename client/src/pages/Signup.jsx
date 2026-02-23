@@ -2,6 +2,8 @@ import { useNavigate, Link } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import bglogin from "../assets/bg-img.png";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from "../utils/firebase";
 
 const Signup = () => {
   // const handleSignUp = (values) => {
@@ -65,17 +67,25 @@ const Signup = () => {
             checkbox: false,
           }}
           validationSchema={validationSchema}
-          onSubmit={(values) => {
-            console.log("first");
-
-            const storedSignupData = JSON.parse(
-              localStorage.getItem("signupData")
-            );
-            if (storedSignupData?.email === values?.email) {
-              console.log("This Email is already being used");
-            } else {
-              localStorage.setItem("signupData", JSON.stringify(values));
+          onSubmit={async (values, { setFieldError, setSubmitting }) => {
+            try {
+              const userCredential = await createUserWithEmailAndPassword(
+                auth,
+                values.email,
+                values.password
+              );
+              await updateProfile(userCredential.user, {
+                displayName: `${values.firstName} ${values.lastName}`,
+              });
               navigate("/login");
+            } catch (error) {
+              if (error?.code === "auth/email-already-in-use") {
+                setFieldError("email", "This email is already being used");
+              } else {
+                setFieldError("email", "Failed to create account");
+              }
+            } finally {
+              setSubmitting(false);
             }
           }}
         >

@@ -1,4 +1,6 @@
-import { createContext, useContext, useState, useCallback } from "react";
+import { createContext, useContext, useState, useCallback, useEffect } from "react";
+import { onAuthStateChanged, signOut as firebaseSignOut } from "firebase/auth";
+import { auth } from "../utils/firebase";
 
 const AuthContext = createContext();
 
@@ -7,23 +9,30 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-    const [isLoggedIn, setLoggedIn] = useState(
-        localStorage.getItem("isLoggedIn") === "true"
-    );
+    const [user, setUser] = useState(null);
+    const [authLoading, setAuthLoading] = useState(true);
 
-    const signIn = useCallback(() => {
-        localStorage.setItem("isLoggedIn", "true");
-        setLoggedIn(true);
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+            setUser(firebaseUser);
+            setAuthLoading(false);
+        });
+
+        return () => unsubscribe();
     }, []);
 
-    const signOut = useCallback(() => {
-        localStorage.setItem("isLoggedIn", "false");
-        localStorage.removeItem("LoginData");
-        setLoggedIn(false);
+    const signIn = useCallback((firebaseUser) => {
+        setUser(firebaseUser);
+    }, []);
+
+    const signOut = useCallback(async () => {
+        await firebaseSignOut(auth);
     }, []);
 
     const authContextValue = {
-        isLoggedIn,
+        isLoggedIn: !!user,
+        user,
+        authLoading,
         signIn,
         signOut,
     };

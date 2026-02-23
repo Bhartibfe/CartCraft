@@ -3,3 +3,5 @@
 .env
 .env.production
 .env.development
+client/.env
+server/.env

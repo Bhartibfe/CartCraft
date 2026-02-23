@@ -9,13 +9,27 @@ const Checkout = () => {
   const amount = Math.round(total * 100);
   const currency = "INR";
   const receiptId = Date.now().toString();
-  const apiUrl = "http://localhost:5000";
+  const apiUrl =
+    import.meta.env.VITE_API_BASE_URL ||
+    import.meta.env.EXPO_PUBLIC_API_BASE_URL ||
+    "http://localhost:5000";
 
   const navigate = useNavigate();
 
   const handlePayment = async (e) => {
+    e.preventDefault();
     const orderData = JSON.parse(localStorage.getItem("billingData"));
-    console.log(orderData);
+
+    if (!import.meta.env.VITE_RAZORPAY_KEY_ID) {
+      alert("Razorpay key is missing. Please set VITE_RAZORPAY_KEY_ID in client/.env");
+      return;
+    }
+
+    if (!amount || amount <= 0) {
+      alert("Your cart total is zero. Add products before checkout.");
+      return;
+    }
+
     const response = await fetch(`${apiUrl}/order`, {
       method: "POST",
       body: JSON.stringify({
@@ -28,11 +42,16 @@ const Checkout = () => {
       },
     });
 
+    if (!response.ok) {
+      const errorText = await response.text();
+      alert(`Order creation failed: ${errorText}`);
+      return;
+    }
+
     const order = await response.json();
-    // console.log(order)
 
     var options = {
-      key: "rzp_test_17aSfgMAWKHlN5", // Enter the Key ID generated from the Dashboard
+      key: import.meta.env.VITE_RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard
       amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
       currency,
       name: "Cart Craft",
@@ -75,7 +94,6 @@ const Checkout = () => {
     });
 
     paymentObject.open();
-    e.preventDefault();
   };
 
   return (
