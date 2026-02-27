@@ -6,7 +6,7 @@ import {
   filterProductsByParentCategory,
   getParentCategoryByKey,
 } from "../utils/categoryMapping";
-
+import heroModel from "../assets/hero-model.png";
 const ITEMS_PER_PAGE = 12;
 
 const Home = () => {
@@ -50,31 +50,59 @@ const Home = () => {
   }, [selectedCategory]);
 
   return (
-    <div className="bg-[#f4f6fb]">
-      <section className="px-5 md:px-12 pt-6 md:pt-10 pb-6">
-        <div className="rounded-3xl overflow-hidden bg-gradient-to-r from-[#102a43] via-[#1f4e79] to-[#2d6cdf] p-6 md:p-10 text-white">
-          <p className="text-xs md:text-sm tracking-[0.2em] uppercase text-orange-200">
-            CartCraft Collection
-          </p>
-          <h1 className="text-3xl md:text-5xl font-extrabold mt-2 leading-tight">
-            Curated picks for
-            <br /> everyday style
-          </h1>
-          <p className="mt-4 text-sm md:text-base text-zinc-100 max-w-xl">
-            Browse products with faster filters, better search, and a clean
-            shopping flow.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <button
-              className="px-5 py-2 rounded-full bg-white text-[#102a43] font-semibold hover:opacity-90"
-              onClick={() => {
-                setSelectedCategory("all");
-                const listSection = document.getElementById("products-list");
-                listSection?.scrollIntoView({ behavior: "smooth" });
-              }}
-            >
-              Shop Now
-            </button>
+    <div className="bg-[#f6f7fb] min-h-screen">
+      <section className="px-5 md:px-12 pt-10 md:pt-14 pb-6">
+        {" "}
+        <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#f6c1cf] via-[#d9dff5] to-[#c5d4f5] px-8 md:px-14 py-8 md:py-0">
+          {" "}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            {/* LEFT CONTENT */}
+            <div className="max-w-xl">
+              <p className="text-xs tracking-[0.2em] uppercase text-gray-500">
+                CartCraft Collection
+              </p>
+
+              <h1 className="text-4xl md:text-6xl font-extrabold mt-3 leading-tight text-gray-900">
+                Curated picks for
+                <br />
+                everyday style
+              </h1>
+
+              <p className="mt-5 text-base text-gray-600">
+                Discover fashion-forward pieces, curated collections, and
+                seamless shopping designed for modern lifestyles.
+              </p>
+
+              <button
+                className="mt-8 px-6 py-3 rounded-full bg-gray-900 text-white font-semibold hover:opacity-90 transition"
+                onClick={() => {
+                  setSelectedCategory("all");
+                  document
+                    .getElementById("products-list")
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                Shop Now
+              </button>
+            </div>
+
+            {/* RIGHT IMAGE */}
+            <div className="relative w-full md:w-[48%] flex justify-end pr-4 md:pr-0">
+              {" "}
+              <div
+                className=" absolute px-6 md:px-8 w-[320px] h-[320px] md:w-[420px] md:h-[420px]
+bg-[#ffd6df]
+rounded-[60%_40%_50%_50%/60%_50%_50%_40%]
+opacity-60
+-translate-x-4 translate-y-4
+z-0"
+              ></div>
+              <img
+                src={heroModel}
+                alt="Fashion Model"
+                className="relative z-10 w-[300px] md:w-[400px] object-contain drop-shadow-xl"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -82,41 +110,42 @@ const Home = () => {
       <section className="px-5 md:px-12 py-4">
         <div className="flex flex-wrap gap-2 md:gap-3">
           <button
-            className={`rounded-xl px-3 py-2 border shadow-sm flex items-center gap-2 transition ${
+            className={`relative rounded-2xl px-6 py-3 flex items-center gap-3 transition-all duration-300 ${
               selectedCategory === "all"
-                ? "bg-[#102a43] text-white border-[#102a43]"
-                : "bg-white text-zinc-700 border-zinc-200 hover:-translate-y-1"
+                ? "bg-gradient-to-r from-pink-100 to-indigo-100 text-gray-700 shadow-lg scale-105"
+                : "bg-white text-gray-800 border border-gray-200 hover:shadow-md hover:-translate-y-1"
             }`}
             onClick={() => setSelectedCategory("all")}
           >
-            <span className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center text-[10px] font-bold">
+            <span className="w-9 h-9 rounded-full bg-[color:var(--atmo-surface-soft)] flex items-center justify-center text-[10px] font-bold">
               All
             </span>
-            <p className="capitalize text-xs font-semibold">
-              All Products
-            </p>
+            <p className="capitalize text-xm font-semibold">All Products</p>
           </button>
 
           {PARENT_CATEGORIES.map((category) => (
             <button
               key={category.key}
-              className={`rounded-xl px-3 py-2 border shadow-sm flex items-center gap-2 transition ${
+              className={`relative rounded-2xl px-6 py-3 flex items-center gap-3 transition-all duration-300 ${
                 selectedCategory === category.key
-                  ? "bg-[#102a43] text-white border-[#102a43]"
-                  : "bg-white text-zinc-700 border-zinc-200 hover:-translate-y-1"
+                  ? "bg-gradient-to-r from-pink-100 to-indigo-100 text-gray-700 shadow-lg scale-105"
+                  : "bg-white text-gray-800 border border-gray-200 hover:shadow-md hover:-translate-y-1"
               }`}
               onClick={() => setSelectedCategory(category.key)}
             >
-              <span className="w-7 h-7 rounded-full bg-zinc-100 flex items-center justify-center p-1">
+              {selectedCategory === category.key && (
+                <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-pink-300 to-indigo-300 blur-md opacity-40 -z-10"></span>
+              )}
+
+              <span className="w-9 h-9 rounded-full bg-white flex items-center justify-center p-1">
                 <img
                   src={category.image}
                   alt={category.label}
                   className="w-full h-full object-contain"
                 />
               </span>
-              <p className="capitalize text-xs font-semibold">
-                {category.label}
-              </p>
+
+              <p className="text-xm font-semibold">{category.label}</p>
             </button>
           ))}
         </div>
@@ -135,7 +164,7 @@ const Home = () => {
 
       <section className="px-5 md:px-12 py-8 flex items-center justify-center gap-2 md:gap-3 flex-wrap">
         <button
-          className="px-4 py-2 rounded-xl border bg-white border-zinc-300 text-zinc-700 disabled:opacity-50"
+          className="px-4 py-2 rounded-xl border bg-[color:var(--atmo-surface-strong)] border-[color:var(--atmo-border-subtle)] text-[color:var(--atmo-text-soft)] disabled:opacity-50"
           onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
           disabled={currentPage === 1}
         >
@@ -149,8 +178,8 @@ const Home = () => {
               key={pageNumber}
               className={`px-4 py-2 rounded-xl border text-sm font-semibold ${
                 currentPage === pageNumber
-                  ? "bg-[#102a43] text-white border-[#102a43]"
-                  : "bg-white text-zinc-700 border-zinc-300"
+                  ? "bg-[color:var(--atmo-accent)] text-white border-[color:var(--atmo-accent)]"
+                  : "bg-[color:var(--atmo-surface-strong)] text-[color:var(--atmo-text-soft)] border-[color:var(--atmo-border-subtle)]"
               }`}
               onClick={() => setCurrentPage(pageNumber)}
             >
@@ -160,7 +189,7 @@ const Home = () => {
         })}
 
         <button
-          className="px-4 py-2 rounded-xl border bg-white border-zinc-300 text-zinc-700 disabled:opacity-50"
+          className="px-4 py-2 rounded-xl border bg-[color:var(--atmo-surface-strong)] border-[color:var(--atmo-border-subtle)] text-[color:var(--atmo-text-soft)] disabled:opacity-50"
           onClick={() =>
             setCurrentPage((prev) => Math.min(totalPages, prev + 1))
           }

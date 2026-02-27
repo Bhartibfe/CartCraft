@@ -1,22 +1,22 @@
-import tshirt from '../assets/tshirt.png'
-import shirt from '../assets/shirt.png'
-import jacket from '../assets/jacket.png'
-import jeans from '../assets/jeans.png'
-import bag from '../assets/bag.png'
-import shoes from '../assets/shoes.png'
-import watch from '../assets/watch.png'
-import cap from '../assets/cap.png'
+import tshirt from "../assets/tshirt.png";
+import shirt from "../assets/shirt.png";
+import jacket from "../assets/jacket.png";
+import jeans from "../assets/jeans.png";
+import bag from "../assets/bag.png";
+import shoes from "../assets/shoes.png";
+import watch from "../assets/watch.png";
+import cap from "../assets/cap.png";
 
 export const categories = [
-    { name: 'T-Shirt', img: tshirt, },
-    { name: 'Shirt', img: shirt, },
-    { name: 'Jacket', img: jacket, },
-    { name: 'Jeans', img: jeans, },
-    { name: 'Bag', img: bag, },
-    { name: 'Shoes', img: shoes },
-    { name: 'Watches', img: watch, },
-    { name: 'Cap', img: cap, },
-]
+  { name: "T-Shirt", img: tshirt },
+  { name: "Shirt", img: shirt },
+  { name: "Jacket", img: jacket },
+  { name: "Jeans", img: jeans },
+  { name: "Bag", img: bag },
+  { name: "Shoes", img: shoes },
+  { name: "Watches", img: watch },
+  { name: "Cap", img: cap },
+];
 
 import { FaTags } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
@@ -44,8 +44,30 @@ import { MdLogout } from "react-icons/md";
 import { BiMenu } from "react-icons/bi";
 import { BiMenuAltRight } from "react-icons/bi";
 
-export {FaTags, FaStar, FaMinus, FaPlus, FaGithub, FaLinkedinIn, FaArrowRight, FaCartShopping, 
-    IoHeartOutline, IoHeartSharp, FaUserCircle, TbTruckDelivery, HiMail, RiFlashlightFill, FaChevronRight, FaChevronLeft,
-    BiSolidQuoteLeft, BiSolidQuoteRight, AiOutlineDelete, IoMdClose, LiaUserEditSolid, IoSettingsOutline, MdLogout,
-    BiMenu, BiMenuAltRight
-}
+export {
+  FaTags,
+  FaStar,
+  FaMinus,
+  FaPlus,
+  FaGithub,
+  FaLinkedinIn,
+  FaArrowRight,
+  FaCartShopping,
+  IoHeartOutline,
+  IoHeartSharp,
+  FaUserCircle,
+  TbTruckDelivery,
+  HiMail,
+  RiFlashlightFill,
+  FaChevronRight,
+  FaChevronLeft,
+  BiSolidQuoteLeft,
+  BiSolidQuoteRight,
+  AiOutlineDelete,
+  IoMdClose,
+  LiaUserEditSolid,
+  IoSettingsOutline,
+  MdLogout,
+  BiMenu,
+  BiMenuAltRight,
+};

@@ -8,78 +8,113 @@ import {
 } from "../utils/constants";
 import { CartContext } from "../context/CartContext";
 
-// eslint-disable-next-line react/prop-types
 const CartItem = ({ cartProduct }) => {
-  const { wishlist, addToWishlist, removeFromWishlist, removeFromCart } =
-    useContext(CartContext);
+  const {
+    wishlist,
+    addToWishlist,
+    removeFromWishlist,
+    removeFromCart,
+    addToCart,
+  } = useContext(CartContext);
 
-  const [isWishlishted, setIsWishlishted] = useState(() => {
-    const index = wishlist.findIndex((item) => item.id === cartProduct.id);
-    if (index === -1) return false;
-    else return true;
-  });
+  const [isWishlisted, setIsWishlisted] = useState(() =>
+    wishlist.some((item) => item.id === cartProduct.id),
+  );
 
-  const handleAddToWishlist = () => {
-    setIsWishlishted(!isWishlishted);
+  const handleWishlistToggle = () => {
+    setIsWishlisted((prev) => !prev);
   };
+
   const handleRemoveFromCart = () => {
-    // eslint-disable-next-line react/prop-types
     removeFromCart(cartProduct?.id);
   };
+
+  const increaseQty = () => {
+    addToCart(cartProduct, 1);
+  };
+
+  const decreaseQty = () => {
+    if (cartProduct.quantity > 1) {
+      addToCart(cartProduct, -1);
+    }
+  };
+
   useEffect(() => {
-    if (isWishlishted) {
+    if (isWishlisted) {
       addToWishlist(cartProduct);
     } else {
-      // eslint-disable-next-line react/prop-types
       removeFromWishlist(cartProduct?.id);
     }
-  }, [isWishlishted]);
+  }, [isWishlisted]);
 
   return (
-    <div className="flex justify-center items-center h-[15vh] text-sm py-4 w-full border-b-[1px] border-b-zinc-200 overflow-x-hidden">
-      <div className="w-[16%] h-full flex items-center justify-center ">
+    <div className="flex items-center gap-6 py-6 border-b border-gray-100 group">
+      {/* IMAGE */}
+      <div className="h-24 w-24 bg-gray-50 rounded-2xl flex items-center justify-center overflow-hidden">
         <img
-          // eslint-disable-next-line react/prop-types
           src={cartProduct?.image}
-          className="h-[60%] w-full md:h-[70%] md:w-[50%]"
+          className="h-[70%] object-contain transition-transform duration-300 group-hover:scale-105"
         />
       </div>
-      <div className="w-[62%] h-full pl-6 pr-10 flex flex-col justify-center md:justify-start">
-        <h1 className="font-medium text-xs md:text-sm md:leading-4">
-          {cartProduct?.title?.slice(0, 43)}
-        </h1>
-        <span className="hidden md:flex items-center gap-2 mt-3">
-          <FaStar className="text-zinc-400" />
-          <p className="font-semibold text-xs text-zinc-400 [word-spacing:3px]">
-            Rating: {cartProduct?.rating?.rate}
-          </p>
-        </span>
-        {/* <span className='hidden md:flex items-center gap-2 mt-1'>
-                    <FaTags className='rotate-90 text-zinc-400' />
-                    <p className='font-semibold text-xs text-zinc-400 [word-spacing:3px]'>{cartProduct.category.toUpperCase()}</p>
-                </span> */}
+
+      {/* DETAILS */}
+      <div className="flex-1">
+        <h3 className="text-base font-semibold text-gray-900">
+          {cartProduct?.title?.slice(0, 60)}
+        </h3>
+
+        <div className="flex items-center gap-2 mt-2 text-sm text-gray-500">
+          <FaStar className="text-amber-400" />
+          {cartProduct?.rating?.rate}
+        </div>
+
+        {/* QUANTITY SELECTOR */}
+        <div className="mt-4 flex items-center gap-4">
+          <div className="flex items-center border border-gray-300 rounded-xl overflow-hidden">
+            <button
+              onClick={decreaseQty}
+              className="px-3 py-1 bg-gray-100 hover:bg-gray-200 transition"
+            >
+              -
+            </button>
+
+            <span className="px-4 font-semibold text-gray-900">
+              {cartProduct.quantity}
+            </span>
+
+            <button
+              onClick={increaseQty}
+              className="px-3 py-1 bg-gray-100 hover:bg-gray-200 transition"
+            >
+              +
+            </button>
+          </div>
+        </div>
       </div>
-      <div className="w-[20%] h-full flex flex-col items-center justify-around md:justify-between">
-        <h1 className="font-semibold text-xs md:text-sm">
-          $ {cartProduct?.price * cartProduct?.quantity}
-        </h1>
-        <div className="flex items-center justify-center gap-2">
+
+      {/* PRICE + ACTIONS */}
+      <div className="flex flex-col items-end gap-3">
+        <p className="text-lg font-bold text-gray-900">
+          ${(cartProduct?.price * cartProduct?.quantity).toFixed(2)}
+        </p>
+
+        <div className="flex gap-3">
           <button
-            className="rounded-full w-8 h-8 p-[7px] border bg-zinc-100 hover:bg-zinc-200"
-            onClick={handleAddToWishlist}
+            onClick={handleWishlistToggle}
+            className="w-9 h-9 rounded-full border border-gray-200 bg-white flex items-center justify-center hover:bg-gray-50 transition"
           >
-            {isWishlishted ? (
-              <IoHeartSharp className="w-full h-full text-purple-800" />
+            {isWishlisted ? (
+              <IoHeartSharp className="text-pink-500" />
             ) : (
-              <IoHeartOutline className="w-full h-full" />
+              <IoHeartOutline />
             )}
           </button>
 
           <button
-            className="rounded-full w-8 h-8 p-[7px] border bg-zinc-100 hover:bg-zinc-200"
             onClick={handleRemoveFromCart}
+            className="w-9 h-9 rounded-full border border-gray-200 bg-white flex items-center justify-center hover:bg-red-50 transition"
           >
-            <AiOutlineDelete className="h-full w-full" />
+            <AiOutlineDelete className="text-red-500" />
           </button>
         </div>
       </div>

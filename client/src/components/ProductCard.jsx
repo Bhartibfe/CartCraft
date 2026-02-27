@@ -1,41 +1,72 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const ProductCard = ({ product }) => {
   return (
-    <Link to={`/products/${product?.id}`} className="h-full w-full block">
-      <article className="h-full w-full rounded-2xl overflow-hidden border border-zinc-200 bg-white shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300">
-        <div className="relative h-[180px] md:h-[220px] bg-gradient-to-br from-[#eff6ff] to-[#fff7ed]">
+    <Link to={`/products/${product?.id}`} className="block h-full w-full">
+      <motion.article
+        className="group relative h-full w-full rounded-3xl overflow-hidden bg-white border border-gray-200 shadow-sm transition-all duration-300"
+        initial={{ opacity: 0, y: 15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.4 }}
+      >
+        {/* Soft Glow on Hover */}
+        <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-pink-200 via-indigo-200 to-transparent opacity-0 group-hover:opacity-20 blur-2xl transition duration-500 pointer-events-none"></div>
+
+        {/* Image Section */}
+        <div className="relative h-[220px] md:h-[250px] flex items-center justify-center bg-gradient-to-br from-[#fdfbfb] to-[#ebedee] overflow-hidden">
           {(product?.discountPercentage || 0) > 0 && (
-            <span className="absolute top-3 left-3 text-[11px] md:text-xs px-2 py-1 rounded-full bg-[#f15b2a] text-white font-semibold">
+            <span className="absolute top-4 left-4 text-xs px-3 py-1 rounded-full bg-gradient-to-r from-pink-300 to-indigo-300 text-white font-semibold shadow-md">
               {Math.round(product.discountPercentage)}% OFF
             </span>
           )}
-          <img
+
+          <motion.img
             src={product?.image}
             alt={product?.title}
-            className="w-full h-full p-5 object-contain hover:scale-105 transition duration-300"
+            className="w-[75%] h-[75%] object-contain drop-shadow-xl"
+            whileHover={{ scale: 1.08, y: -5 }}
+            transition={{ duration: 0.4 }}
           />
         </div>
 
-        <div className="p-4">
-          <p className="text-[11px] md:text-xs uppercase tracking-wide text-[#1f4e79] font-semibold overflow-hidden whitespace-nowrap text-ellipsis">
+        {/* Content */}
+        <div className="p-5">
+          {/* Category */}
+          <p className="text-xs uppercase tracking-wider text-indigo-400 font-semibold">
             {product?.category}
           </p>
-          <h1 className="mt-1 text-sm md:text-base font-semibold text-zinc-800 min-h-[42px] overflow-hidden">
-            {(product?.title || "").slice(0, 56)}
-          </h1>
 
-          <div className="mt-3 flex items-end justify-between">
-            <p className="text-lg md:text-xl font-extrabold text-[#102a43]">
-              ${product?.price}
-            </p>
-            <p className="text-xs md:text-sm text-amber-600 font-semibold">
+          {/* Title */}
+          <h2 className="mt-2 text-base font-semibold text-gray-900 leading-snug min-h-[44px]">
+            {(product?.title || "").slice(0, 60)}
+          </h2>
+
+          {/* Price + Rating */}
+          <div className="mt-4 flex items-center justify-between">
+            <div>
+              <p className="text-xl font-extrabold text-gray-900">
+                ${product?.price}
+              </p>
+              {(product?.discountPercentage || 0) > 0 && (
+                <p className="text-sm text-gray-400 line-through">
+                  $
+                  {(
+                    product?.price /
+                    (1 - product?.discountPercentage / 100)
+                  ).toFixed(0)}
+                </p>
+              )}
+            </div>
+
+            <div className="px-3 py-1 rounded-full bg-amber-100 text-amber-600 text-sm font-semibold">
               ⭐ {Number(product?.rating?.rate || 0).toFixed(1)}
-            </p>
+            </div>
           </div>
         </div>
-      </article>
+      </motion.article>
     </Link>
   );
 };

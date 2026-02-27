@@ -29,7 +29,9 @@ const SearchBar = () => {
 
     const timeoutId = setTimeout(async () => {
       try {
-        const data = await fetchFromApi(`products/search?q=${encodeURIComponent(query)}`);
+        const data = await fetchFromApi(
+          `products/search?q=${encodeURIComponent(query)}`,
+        );
         setSuggestions((data?.products || []).slice(0, 6));
       } catch (error) {
         setSuggestions([]);
@@ -63,7 +65,7 @@ const SearchBar = () => {
         <input
           type="text"
           placeholder="Search products or categories..."
-          className="w-full h-full outline-none rounded-full px-6 bg-zinc-100 text-sm md:text-base"
+          className="w-full h-full outline-none rounded-xl px-4 bg-gray-100 border border-gray-200 text-sm text-gray-800 placeholder:text-gray-400 focus:bg-white focus:ring-2 focus:ring-indigo-300 transition"
           value={search}
           onFocus={() => setShowSuggestions(true)}
           onChange={(e) => setSearch(e.target.value)}
@@ -71,20 +73,20 @@ const SearchBar = () => {
       </form>
 
       {showSuggestions && suggestions.length > 0 && (
-        <div className="absolute top-[110%] left-0 right-0 bg-white rounded-2xl shadow-xl border border-zinc-200 overflow-hidden z-50">
+        <div className="absolute top-[110%] left-0 right-0 bg-white border border-gray-200 shadow-lg rounded-2xl border-[color:var(--atmo-border-subtle)] overflow-hidden z-50">
           {suggestions.map((item) => (
             <button
               key={item.id}
               type="button"
-              className="w-full px-4 py-3 text-left hover:bg-zinc-100 flex items-center gap-3"
+              className="w-full px-4 py-3 text-left hover:bg-[rgba(148,163,184,0.12)] flex items-center gap-3"
               onClick={() => selectSuggestion(item.id)}
             >
               <img
                 src={item.image}
                 alt={item.title}
-                className="w-8 h-8 object-cover rounded-lg bg-zinc-100"
+                className="w-8 h-8 object-cover rounded-lg bg-[color:var(--atmo-surface-soft)]"
               />
-              <span className="text-sm text-zinc-700 overflow-hidden whitespace-nowrap text-ellipsis">
+              <span className="text-sm text-[color:var(--atmo-text-soft)] overflow-hidden whitespace-nowrap text-ellipsis">
                 {item.title}
               </span>
             </button>

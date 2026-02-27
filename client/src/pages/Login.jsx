@@ -23,7 +23,7 @@ const Login = () => {
       const credentials = await signInWithEmailAndPassword(
         auth,
         values.email,
-        values.password
+        values.password,
       );
       signIn(credentials.user);
       navigate("/");
@@ -35,77 +35,98 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-start h-screen bg-[#0a2027]">
-      <div className="w-full h-[28vh] px-10 pt-10 md:w-1/2 md:h-full md:py-10">
-        <img
-          src={bglogin}
-          className="w-[80%] h-full mx-auto rounded-lg md:w-full md:h-full"
-        />
-      </div>
-      <div className="w-full flex flex-col p-10 md:w-1/2 md:h-full md:py-20 md:px-24">
-        <h2 className="font-semibold mb-4 text-[30px] text-center text-zinc-300 md:text-[40px] md:text-start">
-          Welcome Back
-        </h2>
-        <p className="text-xs mb-10 text-zinc-300 text-center md:text-start md:text-sm">
-          Please login to your account
-        </p>
+    <div
+      className="min-h-screen flex items-center justify-center px-6 relative overflow-hidden
+  bg-gradient-to-br from-[#f3c6cf] via-[#cfd6e6] to-[#c5d4f5]"
+    >
+      {/* Soft Background Blobs */}
+      <div className="absolute w-96 h-96 bg-[#f8d8de] rounded-full blur-3xl opacity-40 -top-20 -left-20"></div>
+      <div className="absolute w-96 h-96 bg-[#dbe4fb] rounded-full blur-3xl opacity-40 -bottom-20 -right-20"></div>
 
-        <Formik
-          initialValues={{ email: "", password: "" }}
-          validationSchema={validationSchema}
-          onSubmit={handleSignIn}
-        >
-          {({ isSubmitting, errors }) => (
-            <Form className="w-full">
-              <div className="mb-4">
-                <Field
-                  type="email"
-                  name="email"
-                  className="w-full p-3 pl-5 text-sm text-zinc-200 rounded bg-[#13313a] outline-none"
-                  placeholder="Email"
-                />
-                <ErrorMessage
-                  name="email"
-                  component="p"
-                  className="text-red-400 text-xs"
-                />
-              </div>
+      <div
+        className="relative w-full max-w-4xl flex flex-col md:flex-row
+    bg-white/60 backdrop-blur-lg rounded-3xl shadow-xl overflow-hidden"
+      >
+        {/* Left Illustration */}
+        <div className="hidden md:flex md:w-1/2 items-center justify-center p-10">
+          <img src={bglogin} className="w-[62%] scale-110" alt="Login Visual" />
+        </div>
 
-              <div className="mb-4">
-                <Field
-                  type="password"
-                  name="password"
-                  className="w-full p-3 pl-5 text-sm text-zinc-200 rounded bg-[#13313a] outline-none"
-                  placeholder="Password"
-                />
-                <ErrorMessage
-                  name="password"
-                  component="p"
-                  className="text-red-400 text-xs"
-                />
-              </div>
+        {/* Right Form */}
+        <div className="w-full md:w-1/2 p-10 md:p-14">
+          <h2 className="text-4xl font-bold text-gray-900 mb-2">
+            Welcome Back
+          </h2>
 
-              {errors?.general && (
-                <p className="text-red-400 text-xs">{errors?.general}</p>
-              )}
+          <p className="text-gray-600 mb-10">Please login to your account</p>
 
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="bg-[#196a78] text-white w-full py-3 my-6 rounded hover:bg-[#17606d] hover:-translate-y-1 duration-200"
-              >
-                {isSubmitting ? "Logging in..." : "Login"}
-              </button>
-            </Form>
-          )}
-        </Formik>
+          <Formik
+            initialValues={{ email: "", password: "" }}
+            validationSchema={validationSchema}
+            onSubmit={handleSignIn}
+          >
+            {({ isSubmitting, errors }) => (
+              <Form>
+                <div className="mb-5">
+                  <Field
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    className="w-full p-3 rounded-xl bg-white/80 border border-gray-200
+                  text-gray-800 placeholder-gray-400
+                  focus:outline-none focus:ring-2 focus:ring-indigo-300 transition"
+                  />
+                  <ErrorMessage
+                    name="email"
+                    component="p"
+                    className="text-red-500 text-xs mt-1"
+                  />
+                </div>
 
-        <p className="text-xs text-zinc-300 text-center md:text-start">
-          Don&apos;t have an account?
-          <Link to="/signup">
-            <span className="text-[#2796aa] hover:underline"> Sign Up</span>
-          </Link>
-        </p>
+                <div className="mb-5">
+                  <Field
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    className="w-full p-3 rounded-xl bg-white/80 border border-gray-200
+                  text-gray-800 placeholder-gray-400
+                  focus:outline-none focus:ring-2 focus:ring-indigo-300 transition"
+                  />
+                  <ErrorMessage
+                    name="password"
+                    component="p"
+                    className="text-red-500 text-xs mt-1"
+                  />
+                </div>
+
+                {errors?.general && (
+                  <p className="text-red-500 text-sm">{errors.general}</p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full py-3 mt-6 rounded-xl
+                bg-gradient-to-r from-indigo-500 to-blue-500
+                text-white font-semibold shadow-md
+                hover:opacity-90 transition"
+                >
+                  {isSubmitting ? "Logging in..." : "Login"}
+                </button>
+              </Form>
+            )}
+          </Formik>
+
+          <p className="text-sm mt-6 text-gray-600">
+            Don&apos;t have an account?
+            <Link
+              to="/signup"
+              className="text-indigo-600 font-semibold ml-1 hover:underline"
+            >
+              Sign Up
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );

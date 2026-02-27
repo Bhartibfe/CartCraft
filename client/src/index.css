@@ -1,8 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:wght@300&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 
 * {
   box-sizing: border-box;
@@ -10,8 +9,258 @@
   padding: 0;
 }
 
+html,
+body {
+  height: 100%;
+}
+
 body {
   font-family: "Montserrat", sans-serif;
+  background: var(--atmo-page-bg);
+  color: var(--atmo-text-main);
+  -webkit-font-smoothing: antialiased;
+  transition:
+    background 260ms ease,
+    color 260ms ease;
+}
+
+#root {
+  min-height: 100%;
+}
+
+:root {
+  /* Fine Paper (light) defaults with colorful gradient shapes */
+  --atmo-page-bg:
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(236, 72, 153, 0.2),
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 85% 20%,
+      rgba(54, 88, 255, 0.15),
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 50% 90%,
+      rgba(45, 212, 191, 0.12),
+      transparent 60%
+    ),
+    linear-gradient(180deg, #f9f6f0 0%, #f1ebe1 50%, #e8e0d5 100%);
+  --atmo-surface-soft: rgba(255, 255, 255, 0.82);
+  --atmo-surface-strong: rgba(255, 255, 255, 0.96);
+  --atmo-border-subtle: rgba(15, 23, 42, 0.06);
+  --atmo-border-strong: rgba(15, 23, 42, 0.16);
+  --atmo-text-main: #111827;
+  --atmo-text-soft: #4b5563;
+  --atmo-text-muted: #9ca3af;
+  --atmo-accent: #3658ff;
+  --atmo-accent-soft: rgba(54, 88, 255, 0.12);
+  --atmo-accent-strong: rgba(54, 88, 255, 0.2);
+  --atmo-radius-lg: 18px;
+  --atmo-radius-full: 999px;
+  --atmo-blur-strong: 20px;
+  --atmo-shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.06);
+  --atmo-shadow-elevated: 0 26px 60px rgba(15, 23, 42, 0.12);
+}
+
+/* dark theme removed; app is fixed to light */
+
+/* If you ever want dark again, reintroduce css and attributes */
+
+.atmo-page {
+  background: var(--atmo-page-bg);
+}
+
+.atmo-glass {
+  position: relative;
+  background:
+    radial-gradient(circle at 0% 0%, var(--atmo-accent-soft), transparent 55%),
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(236, 72, 153, 0.14),
+      transparent 60%
+    ),
+    linear-gradient(135deg, rgba(15, 23, 42, 0.06), rgba(15, 23, 42, 0.24));
+  backdrop-filter: blur(var(--atmo-blur-strong));
+  -webkit-backdrop-filter: blur(var(--atmo-blur-strong));
+  border-radius: var(--atmo-radius-lg);
+  border: 1px solid var(--atmo-border-subtle);
+  box-shadow: var(--atmo-shadow-soft);
+}
+
+html[data-theme="light"] .atmo-glass {
+  background:
+    radial-gradient(
+      circle at 0% 0%,
+      rgba(148, 163, 184, 0.08),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(255, 255, 255, 0.6),
+      transparent 60%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.96),
+      rgba(248, 250, 252, 0.96)
+    );
+}
+
+.atmo-nav-shell {
+  background: transparent;
+}
+
+.atmo-pill {
+  border-radius: var(--atmo-radius-full);
+  border: 1px solid var(--atmo-border-subtle);
+  background:
+    linear-gradient(135deg, var(--atmo-accent-soft), rgba(15, 23, 42, 0)),
+    rgba(15, 23, 42, 0.04);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.08),
+    0 18px 40px rgba(15, 23, 42, 0.18);
+}
+
+.atmo-pill--ghost {
+  border-radius: var(--atmo-radius-full);
+  border: 1px solid var(--atmo-border-subtle);
+  background: rgba(15, 23, 42, 0.02);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.atmo-theme-toggle {
+  border-radius: var(--atmo-radius-full);
+  border: 1px solid var(--atmo-border-strong);
+  background:
+    radial-gradient(
+      circle at 30% 0%,
+      var(--atmo-accent-strong),
+      transparent 55%
+    ),
+    rgba(15, 23, 42, 0.8);
+  color: var(--atmo-text-main);
+  box-shadow:
+    0 0 0 1px rgba(15, 23, 42, 0.46),
+    0 0 25px rgba(129, 140, 248, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition:
+    background 220ms ease,
+    box-shadow 220ms ease,
+    transform 120ms ease,
+    border-color 160ms ease;
+}
+
+html[data-theme="light"] .atmo-theme-toggle {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(254, 249, 195, 0.75),
+      rgba(251, 251, 251, 0.92)
+    ),
+    #fefce8;
+  box-shadow:
+    0 0 0 1px rgba(148, 163, 184, 0.4),
+    0 18px 30px rgba(15, 23, 42, 0.14);
+}
+
+/* no toggle active styles */
+
+/* shimmer animation for cards or other elements */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer-border {
+  position: relative;
+  overflow: hidden;
+}
+
+/* animated gradient utility */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease infinite;
+}
+
+.shimmer-border::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  z-index: -1;
+  background: linear-gradient(120deg, #ff9a9e, #fad0c4, #fad0c4, #ff9a9e);
+  background-size: 200% 200%;
+  animation: shimmer 3s infinite;
+}
+
+/* mouse tracking glow effect */
+.card-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-glow::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 255, 255, 0.25),
+    transparent 40%
+  );
+  transition: background-position 0.1s;
+}
+
+/* scroll-aware fade/scale animation (used by framer-motion too) */
+/* not strictly needed but provide base state */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.atmo-profile-card {
+  color: var(--atmo-text-main);
+}
+
+.atmo-profile-muted {
+  color: var(--atmo-text-soft);
+}
+
+.atmo-profile-subtle {
+  color: var(--atmo-text-muted);
 }
 
 ::-webkit-scrollbar {

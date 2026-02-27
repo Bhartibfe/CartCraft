@@ -1,27 +1,13 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import Signup from "../pages/Signup";
-import Login from "../pages/Login";
+import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/Auth";
 
 const PublicRoutes = () => {
-    const { isLoggedIn, authLoading } = useAuth();
+  const { isLoggedIn, authLoading } = useAuth();
 
-    if (authLoading) {
-        return null;
-    }
+  if (authLoading) return null;
 
-    return (
-        <Routes>
-            <Route
-                path="/signup"
-                element={isLoggedIn ? <Navigate to="/" /> : <Signup />}
-            />
-            <Route
-                path="/login"
-                element={isLoggedIn ? <Navigate to="/" /> : <Login />}
-            />
-        </Routes>
-    );
+  // if already logged in, redirect away from auth pages
+  return isLoggedIn ? <Navigate to="/" /> : <Outlet />;
 };
 
 export default PublicRoutes;
